@@ -7,7 +7,7 @@
     }
 </style>
 <div class="title" style="margin: 4px 15px;">
-    <h3>Tambah Data User</h3>
+    <h3>Edit Data User</h3>
     <a href="/home">Dashboard / </a><a href="{{ route('user.home') }}">Data User / </a><a >Edit Data User</a>
 </div><br>
 

@@ -11,12 +11,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Foundation\Application;
 use PDF;
-use Barryvdh\DomPDF\PDF as DomPDFPDF;
-use Dompdf\Dompdf;
 use Excel;
 use App\Exports\LateExport;
-use Illuminate\Support\Facades\Log;
 
 
 class LateController extends Controller
@@ -265,23 +263,13 @@ class LateController extends Controller
     public function exportexcel()
     {
         $file_name = 'data_keterlambatan'.'.xlsx';
-        return Excel::download(new LateExport, $file_name);
+        return Excel::download(new \App\Exports\LateExport, $file_name);
     }
-
-    // public function exportexcelPs()
-    // {
-    //     $file_name = 'data_keterlambatan'.'.xlsx';
-    //     return Excel::download(new LateExport, $file_name);
-    // }
 
     public function exportexcelPs()
     {
-    $rayonId = Rayon::where('user_id', Auth::user()->id)->first()->id;
-    $export = new LateExport($rayonId);
-
-    return Excel::download($export, 'late_export.xlsx');
+        $rayon = Rayon::where('user_id', Auth::user()->id)->first();
+        return Excel::download(new \App\Exports\LateExport, 'data_keterlambatan '.$rayon->rayon.'.xlsx');
     }
-
-
-
+    
 }
